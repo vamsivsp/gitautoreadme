@@ -1,0 +1,19 @@
+name: Generate README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate README content
+        run: ./generate-readme.sh
+      - name: Commit and push changes
+        run: |
+          git add README.md
+          git commit -m "Auto-generated README"
+          git push origin main
