@@ -23,3 +23,4 @@ for resource in "${resources[@]}"; do
   terraform show -json "$resource" | jq -r '.attributes[] | .name + ": " + .value'
   echo ""
 done
+# its done
