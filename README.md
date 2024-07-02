@@ -16,6 +16,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_db_subnet_group.education](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group) | resource |
 | [aws_instance.example1](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 
 ## Inputs
