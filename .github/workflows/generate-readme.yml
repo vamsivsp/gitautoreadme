@@ -19,8 +19,8 @@ jobs:
         run: |
           git config --global user.name "tvs"
           git config --global user.email "yours@example.com"
-      - name: Run Terraform
-        uses: hashicorp/terraform-github-actions@v1
+      - name: Setup Terraform
+        uses: hashicorp/terraform-setup@v2
         with:
           terraform_version: 'latest'
           args: 'parse'
