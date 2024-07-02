@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Git user
+        run: |
+          git config --global user.name "tvs"
+          git config --global user.email "yours@example.com"
       - name: Generate README content
         run: ./generate-readme.sh
       - name: Commit and push changes
