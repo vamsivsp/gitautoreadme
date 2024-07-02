@@ -22,6 +22,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_SECRET }}
         run: |
-          git add README.md
+          git add .
           git commit -m "Auto-generated README"
           git push origin main
