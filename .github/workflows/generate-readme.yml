@@ -1,39 +1,24 @@
-name: GenerateREADME
+name: Generate README
 
 on:
   push:
-    branches:
-      - main
     paths:
-      - '**/*.tf'  # Trigger on Terraform file additions
-
-permissions:
-  contents: write
+      - '**.tf'  # Trigger on changes to any .tf file
 
 jobs:
   generate-readme:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Git user
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install terraform-docs
         run: |
-          git config --global user.name "tvs"
-          git config --global user.email "yours@example.com"
-      - name: Setup Terraform
-        uses: hashicorp/terraform-setup@v2
-        with:
-          terraform_version: 'latest'
-          args: 'parse'
-      - name: Generate README content
+          sudo snap install terraform-docs
+
+      - name: Generate README
         run: |
-          # Extract relevant info from .tf file
-          info=$(terraform show -json | jq '.resources[] | .name + ": " + .type')
-          # Update README file
-          echo "$info" >> README.md
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_SECRET }}
-        run: |
-          git add -A
-          git commit -m "Auto-generated README"
+          terraform-docs markdown table . > README.md
+          git add README.md
+          git commit -m "Auto-generated README [skip ci]"
           git push origin main
