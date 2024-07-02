@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**/*.tf'  # Trigger on Terraform file additions
+
 permissions:
   contents: write
-  
+
 jobs:
   generate-readme:
     runs-on: ubuntu-latest
@@ -16,8 +19,17 @@ jobs:
         run: |
           git config --global user.name "tvs"
           git config --global user.email "yours@example.com"
+      - name: Run Terraform
+        uses: hashicorp/terraform-github-actions@v1
+        with:
+          terraform_version: 'latest'
+          args: 'parse'
       - name: Generate README content
-        run: ./generate-readme.sh
+        run: |
+          # Extract relevant info from .tf file
+          info=$(terraform show -json | jq '.resources[] | .name + ": " + .type')
+          # Update README file
+          echo "$info" >> README.md
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_SECRET }}
