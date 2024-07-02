@@ -2,8 +2,8 @@ name: Generate README
 
 on:
   push:
-    paths:
-      - '**.tf'  # Trigger on changes to any .tf file
+    branches:
+      - main'  # Trigger on changes to any .tf file
 
 jobs:
   generate-readme:
